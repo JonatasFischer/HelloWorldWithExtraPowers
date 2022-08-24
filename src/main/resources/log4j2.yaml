@@ -1,0 +1,59 @@
+Configuration:
+  status: INFO
+  packages: srvg.logging
+  monitorInterval: 30
+
+  properties:
+    property:
+      - name: log-path
+        value: log
+      - name: stacktrace-excludes
+        value: "
+          com.github.mauricio.async.db.mysql,
+          io.netty.channel,
+          io.netty.handler,
+          io.netty.util,
+          io.vertx.core.impl,
+          io.vertx.ext.asyncsql.impl,
+          java.util.concurrent,
+          me.escoffier.vertx.completablefuture,
+          scala.concurrent.impl,
+          scala.concurrent.Promise
+          "
+
+  Loggers:
+    Root:
+      level: WARN
+      AppenderRef:
+        - ref: STDOUT
+        - ref: rotatingLogFile
+    logger:
+      - name: com.greeting
+        level: DEBUG
+        additivity: true
+        AppenderRef:
+          ref: rotatingLogFile
+
+  appenders:
+    appender:
+      - name: STDOUT
+        type: Console
+        PatternLayout:
+          header: "${meta:}\n"
+          Pattern: "%d{HH:mm:ss,SSS} [%X{eId}] %-5p %c{1} - %m%n%xEx{full,filters(${stacktrace-excludes})}"
+      - name: SHORT_STDOUT
+        type: Console
+        PatternLayout:
+          Pattern: "%d{HH:mm:ss,SSS} [%X{eId}] %-5p %m%n"
+
+      - name: rotatingLogFile
+        type: RollingFile
+        fileName: ${log-path}/main.log
+        filePattern: "${log-path}/main_%d{yyyy-MM-dd}-%i.log.gz"
+        PatternLayout:
+          header: "${meta:}\n"
+          Pattern: "%d{HH:mm:ss,SSS} [%X{eId}] %-5p %c{1} - %m%n%xEx{full,filters(${stacktrace-excludes})}"
+        Policies:
+          OnStartupTriggeringPolicy:
+            minSize: 0
+          TimeBasedTriggeringPolicy: { }
