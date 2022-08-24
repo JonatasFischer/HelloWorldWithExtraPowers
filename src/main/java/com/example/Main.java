@@ -13,6 +13,6 @@ public class Main {
     while (i++ < 10) {
       logger.info(picker.pick().greet());
     }
-    logger.info("%nApplication Finished%n");
+    logger.info("Application Finished");
   }
 }

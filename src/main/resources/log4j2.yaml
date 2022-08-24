@@ -1,6 +1,6 @@
 Configuration:
   status: INFO
-  packages: srvg.logging
+  packages: com.example
   monitorInterval: 30
 
   properties:
@@ -23,16 +23,10 @@ Configuration:
 
   Loggers:
     Root:
-      level: WARN
+      level: INFO
       AppenderRef:
         - ref: STDOUT
         - ref: rotatingLogFile
-    logger:
-      - name: com.greeting
-        level: DEBUG
-        additivity: true
-        AppenderRef:
-          ref: rotatingLogFile
 
   appenders:
     appender:
@@ -41,15 +35,11 @@ Configuration:
         PatternLayout:
           header: "${meta:}\n"
           Pattern: "%d{HH:mm:ss,SSS} [%X{eId}] %-5p %c{1} - %m%n%xEx{full,filters(${stacktrace-excludes})}"
-      - name: SHORT_STDOUT
-        type: Console
-        PatternLayout:
-          Pattern: "%d{HH:mm:ss,SSS} [%X{eId}] %-5p %m%n"
 
       - name: rotatingLogFile
         type: RollingFile
         fileName: ${log-path}/main.log
-        filePattern: "${log-path}/main_%d{yyyy-MM-dd}-%i.log.gz"
+        filePattern: "${log-path}/example_%d{yyyy-MM-dd}-%i.log.gz"
         PatternLayout:
           header: "${meta:}\n"
           Pattern: "%d{HH:mm:ss,SSS} [%X{eId}] %-5p %c{1} - %m%n%xEx{full,filters(${stacktrace-excludes})}"

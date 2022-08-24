@@ -6,7 +6,7 @@ plugins {
 
 group 'com.sportradar'
 version '1.0-SNAPSHOT'
-mainClassName = 'com.sportradar.Main'
+mainClassName = 'com.example.Main'
 
 repositories {
     mavenCentral()

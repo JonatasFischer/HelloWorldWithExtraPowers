@@ -23,7 +23,7 @@ public class RandomGreeterPicker {
 
   private int getNextRandomInRange(int max) {
     int randNumber = this.random.nextInt(max);
-    logger.info(String.format("Random Number: %d, range: 0 - %d", randNumber, max));
+    logger.debug(String.format("Random Number: %d, range: 0 - %d", randNumber, max));
     return randNumber;
   }
 
